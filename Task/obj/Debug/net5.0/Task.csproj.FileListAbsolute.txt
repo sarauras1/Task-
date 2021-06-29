@@ -3,3 +3,14 @@ C:\Users\allbe\source\repos\Task\Task\obj\Debug\net5.0\Task.GeneratedMSBuildEdit
 C:\Users\allbe\source\repos\Task\Task\obj\Debug\net5.0\Task.AssemblyInfoInputs.cache
 C:\Users\allbe\source\repos\Task\Task\obj\Debug\net5.0\Task.AssemblyInfo.cs
 C:\Users\allbe\source\repos\Task\Task\obj\Debug\net5.0\Task.csproj.CoreCompileInputs.cache
+C:\Users\allbe\source\repos\Task\Task\bin\Debug\net5.0\Task.exe
+C:\Users\allbe\source\repos\Task\Task\bin\Debug\net5.0\Task.deps.json
+C:\Users\allbe\source\repos\Task\Task\bin\Debug\net5.0\Task.runtimeconfig.json
+C:\Users\allbe\source\repos\Task\Task\bin\Debug\net5.0\Task.runtimeconfig.dev.json
+C:\Users\allbe\source\repos\Task\Task\bin\Debug\net5.0\Task.dll
+C:\Users\allbe\source\repos\Task\Task\bin\Debug\net5.0\ref\Task.dll
+C:\Users\allbe\source\repos\Task\Task\bin\Debug\net5.0\Task.pdb
+C:\Users\allbe\source\repos\Task\Task\obj\Debug\net5.0\Task.dll
+C:\Users\allbe\source\repos\Task\Task\obj\Debug\net5.0\ref\Task.dll
+C:\Users\allbe\source\repos\Task\Task\obj\Debug\net5.0\Task.pdb
+C:\Users\allbe\source\repos\Task\Task\obj\Debug\net5.0\Task.genruntimeconfig.cache

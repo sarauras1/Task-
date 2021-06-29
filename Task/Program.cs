@@ -1,92 +1,178 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 namespace Task
 {
 
-    enum Formato
-    {
-        Normale,
-        CSV
-    }
+
     class Program
     {
 
-        private static Archivio Tasks = new Archivio();
-        private static string fileName = "archivio.csv";
+
+
+     private static Archivio manager = new Archivio();
+      
         static void Main(string[] args)
         {
            
-            Console.WriteLine("Benvenuto");
-            do
-            {    
-              
-                Console.WriteLine("Scegli opzione task:");
-                Console.WriteLine("1. Bassa");
-                Console.WriteLine("2. Media");
-                Console.WriteLine("3. Alta");
-                Console.WriteLine("0. Esci");
-                Console.WriteLine("Scegli F per visualizzare i file:");
-                Console.WriteLine("1. Salva per salvare le tue tasks");
+            Console.WriteLine("Gestione tasks");
+            Menu();
 
-                //lista aggiornata
-                List<TipoTask> listaAgg = Tasks.OttieniTasksAgg();
+        }
+
+        private static void Menu()
+        {
+            do
+            {
+                TipoTask tipo = new TipoTask();
+                Console.WriteLine();
+                Console.WriteLine("1. Crea task");
+                Console.WriteLine("2. Visualizza tasks");
+                Console.WriteLine("3. Filtra tasks");
+           
+                Console.WriteLine("5. Elimina task");
+                Console.WriteLine("0. Esci");
 
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
-                        if (listaAgg.Count > 0)
-                      
-                            foreach (TipoTask task in listaAgg)
-                                Console.WriteLine(task.InserisciTaskBassa);
-                     
-                
-                break;
+                        CreaTask(tipo);
+                        break;
                     case '2':
-                        if (listaAgg.Count > 0)
-                      
-                       foreach (TipoTask task in listaAgg)
-                       Console.WriteLine(task.InserisciTaskMedia);
-                       
-                break;
+                        Visualizza();
+                        break;
                     case '3':
-                        if (listaAgg.Count > 0)
-
-                            foreach (TipoTask task in listaAgg)
-                                Console.WriteLine(task.InserisciTaskAlta);
+                        Filtra(tipo.Livello);
                         break;
-                    case 'T':
-                        Carica();
-                        break;
-                    case 'F':
-                        Salva();
+              
+                    case '5':
+                        EliminaTask();
                         break;
                     case '0':
                         return;
+                    default:
+                        Console.WriteLine("Scelta non valida");
+                        break;
+                }
+            } while (true);
+        }
+    
+
+        private static void EliminaTask()
+        {
+           
+            Console.WriteLine("Elimina Tast tramite id");
+            int id = Convert.ToInt32(Console.ReadLine());
+             manager.task.Remove(id);// elimina solo l id ma non il row connesso
+        }
+
+      
+        private static void Filtra(Livello livello)
+        {
+          
+            Console.Write("--Seleziona livello---");
+            Console.Write("---1. Basso - 2. Medio - 3. Alto--");
+            string scelta = Console.ReadLine();
+
+            do
+            {
+               
+                switch (scelta)
+                {
+                     case "1":
+                        livello = Livello.Basso;
+                        break;
+               
+                    case "2":
+                        livello = Livello.Medio;
+                        break;
+                    case "3":
+                        livello = Livello.Alto;
+                        break;
+                }
+            } while (scelta != "1" && scelta != "2" && scelta != "3");
+
+            Console.WriteLine(manager.OttieniFiltro(livello));
+            
+          
+            
+        }
+
+        private static void Visualizza()
+        { 
+         Console.WriteLine(manager.OttieniTask());                              
+        }
+
+        private static void CreaTask(TipoTask tipo)
+        {
+         
+
+          
+          
+                Console.WriteLine();
+                Console.Write("Descrizione del task: ");
+                tipo.Descrizione = Console.ReadLine();
+                Console.WriteLine("Data Scadenza");                                   
+                tipo.DateScadenza = Convert.ToDateTime(Console.ReadLine());
+                try
+                {
+                    if (DateTime.Today > tipo.DateScadenza)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                }catch(Exception e)
+
+                {
+                    Console.WriteLine($"Data invalida {e.Message}");
+                }
+                    
+               
+                Console.WriteLine("Scelta Livello");
+                Console.WriteLine("1 per Bassa");
+                Console.WriteLine("2 per Media");
+                Console.WriteLine("3 per Alta");
+                string scelta = Console.ReadLine();
+                switch (scelta)
+                {
+                    case "1":
+                        tipo.Livello = Livello.Basso;
+                        break;
+                    case "2":
+                        tipo.Livello = Livello.Medio;
+                        break;
+                    case "3":
+                        tipo.Livello = Livello.Alto;
+                        break;
                 }
 
-            } while (true);
-          
+            manager.AggiungiTask(tipo.Descrizione, tipo.DateScadenza, tipo.Livello);
+             Console.WriteLine($"Task: {tipo.Id++} {tipo.Descrizione} {tipo.DateScadenza} {tipo.Livello} ---  Creata");
+
+             VuoiTornare(tipo);
+                    
 
         }
-
-       
-
-        private static void Carica()
+      
+        private static void VuoiTornare(TipoTask tipo)
         {
-            using (StreamReader sw = new StreamReader(fileName))
+           
+            Console.WriteLine("Vuoi tornare al menu principale?");
+            Console.WriteLine("1. Si");
+            Console.WriteLine("2. Vuoi Creare un altra task");
+            Console.WriteLine("3. No");
+            string scelta = Console.ReadLine();
+            switch (scelta)
             {
-                string contenuto = sw.ReadToEnd();
-                Tasks.Carica(contenuto);
+                case "1":
+                    Menu();
+                    break;
+                case "2":
+                    CreaTask(tipo);
+                    break;
+                case "3":
+                    Console.WriteLine("GoodBye");
+                    return;
+              
             }
         }
-
-        private static void Salva()
-        {
-            using (StreamWriter sw = new StreamWriter(fileName))
-                sw.Write(Tasks.OttieniTasksAgg(Formato.CSV));
-        }
-
     }
 }
-

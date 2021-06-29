@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,56 +7,38 @@ using System.Threading.Tasks;
 
 namespace Task
 {
-    class Archivio
-    {   
-
-        //inizializza lista tasks
-        List<TipoTask> Tasks = new List<TipoTask>();
-
-        public TaskScheduler InserisciTaskBassa()
+  
+    public class Archivio
+    {
+        int id;
+       public Dictionary<int, TipoTask> task = new Dictionary<int, TipoTask>();
+        internal TipoTask AggiungiTask(string descrizione, DateTime dataScadenza, Livello livello)
         {
-            Console.WriteLine("Inserisci nuova task Bassa");
-            string newT = Console.ReadLine();
-            //aggiungo alla lista dei libri
-            Tasks.Add(newT);
-            return newT;
-        }
-        public TaskScheduler InserisciTaskMedia()
-        {
-            Console.WriteLine("Inserisci nuova task Media");
-            string newTask = Console.ReadLine();
-            //aggiungo alla lista dei libri
-            Tasks.Add(newT);
-            return newT;
+            TipoTask tasks = new TipoTask(++id, descrizione, dataScadenza, livello);
+            task.Add(tasks.Id, tasks);
+
+            return tasks;
         }
 
-        internal List<TipoTask> OttieniTasksAgg(Formato CSV)
+        internal string OttieniFiltro(Livello livello)
         {
-            return Tasks;
+            string s = "";
+
+            foreach (TipoTask t in task.Values)
+                if ( t.Livello == livello)
+                    s += t.GetInfo() + '\n';
+
+            return s;
         }
-
-        internal List<TipoTask> OttieniTasksAgg()
+        internal string OttieniTask()
         {
-            throw new NotImplementedException();
-        }
-
-        public TaskScheduler InserisciTaskAlta()
-        {
-            Console.WriteLine("Inserisci nuova task Alta");
-            string newTask = Console.ReadLine();
-            //aggiungo alla lista dei libri
-            Tasks.Add(newT);
-            return newT;
-        }
-
-        internal void Carica(string contenuto)
-        {
-            Tasks.Clear();
-
-            foreach(string r in righe)
+            string s = "";
+            foreach (TipoTask t in task.Values)
+            {
+                
+                 s += t.GetInfo();
+            }
+            return s;
         }
     }
-
-
-   
 }

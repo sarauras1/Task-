@@ -6,34 +6,46 @@ using System.Threading.Tasks;
 
 namespace Task
 {
-    class TipoTask
+
+
+
+    public class TipoTask
     {
+       
+        public int Id { get; set; }
+        public string Descrizione { get; set; }
+        public DateTime DateScadenza { get; set; }
+        public Livello Livello { get; set; }
 
-        //Costruttore
-        public TipoTask(string bassa, string media, string alta)
+     
+
+        public TipoTask()
         {
-            TaskBassa = bassa;
-            TaskAlta = alta;
-            TaskMedia = media;
         }
 
-        public string TaskBassa { get; }
-        public string TaskAlta { get; }
-        public string TaskMedia { get; }
-
-        public string OttieniDati
+   
+        public TipoTask(int id, string descrizione, DateTime dataScadenza, Livello livello)
         {
-            get
-            {
-                return ($"{TaskBassa}-{TaskMedia}-{TaskAlta}");
-            }
+            Id = id;
+            Descrizione = descrizione;
+            DateScadenza = dataScadenza;
+            Livello = livello;
         }
 
-        public bool InserisciTaskBassa { get; internal set; }
-        public bool InserisciTaskMedia { get; internal set; }
-        public bool InserisciTaskAlta { get; internal set; }
+        internal string GetInfo()
+        {
+            return $" \t Id = {Id} Descrizione = {Descrizione} Data Scadenza = {DateScadenza} Livello = {Livello} \n";
+
+        }
+
     }
-
+    public enum Livello
+    {
+        Basso,
+        Medio,
+        Alto,
+        Tutti
+    }
 
 
 }
